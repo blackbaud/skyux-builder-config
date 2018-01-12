@@ -15,4 +15,4 @@ https://host.nxt.blackbaud.com/browserstack/sessions/${session}
 `
     );
   }
-}
+};

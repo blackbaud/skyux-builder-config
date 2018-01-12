@@ -50,7 +50,7 @@ const config = merge(common.config, {
           console.error('Error connecting to Browserstack.');
           reject(err);
         } else {
-          console.log('Connected to Browserstack.  Beginning e2e tests.')
+          console.log('Connected to Browserstack.  Beginning e2e tests.');
           resolve();
         }
       });
@@ -58,31 +58,27 @@ const config = merge(common.config, {
   },
 
   // Used to grab the Browserstack session
-  onPrepare: () => {
-    return new Promise((resolve, reject) => {
-      browser
-        .driver
-        .getSession()
-        .then(session => {
-          logger.session(session.getId());
-          resolve();
-        })
-        .catch(reject);
-    });
-  },
+  onPrepare: () => new Promise((resolve, reject) => {
+    browser
+      .driver
+      .getSession()
+      .then(session => {
+        logger.session(session.getId());
+        resolve();
+      })
+      .catch(reject);
+  }),
 
   // Used to close the Browserstack tunnel
-  afterLaunch: () => {
-    return new Promise((resolve) => {
-      if (exports.bsLocal) {
-        console.log('Closing Browserstack connection.');
-        exports.bsLocal.stop(resolve);
-      } else {
-        console.log('Not connected to Browserstack.  Nothing to close.');
-        resolve();
-      }
-    });
-  }
+  afterLaunch: () => new Promise((resolve) => {
+    if (exports.bsLocal) {
+      console.log('Closing Browserstack connection.');
+      exports.bsLocal.stop(resolve);
+    } else {
+      console.log('Not connected to Browserstack.  Nothing to close.');
+      resolve();
+    }
+  })
 });
 
 exports.config = config;
