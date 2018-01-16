@@ -22,7 +22,7 @@ function getConfig(config) {
       browser: 'chrome',
       os: 'Windows',
       os_version: '10',
-      build: args.buildId
+      build: args.buildNumber
     }
   };
 
