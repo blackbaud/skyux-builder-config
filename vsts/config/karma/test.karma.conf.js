@@ -10,6 +10,23 @@ const logger = require('../utils/logger');
 const args = minimist(process.argv.slice(2));
 
 /**
+ * Applies the default properties.
+ */
+function applyDefaults(custom) {
+  const shared = {
+    base: 'BrowserStack',
+    name: 'skyux test',
+    build: args.buildNumber,
+    project: args.buildDefinitionName
+  };
+
+  Object.keys(custom)
+    .forEach(key => shared[key] = custom[key]);
+
+  return shared;
+}
+
+/**
  * VSTS platform overrides.
  * @name getConfig
  * @param {Object} config
@@ -17,15 +34,17 @@ const args = minimist(process.argv.slice(2));
 function getConfig(config) {
 
   const customLaunchers = {
-    bs_windows_chrome_latest: {
-      base: 'BrowserStack',
+    bs_windows_chrome_latest: applyDefaults({
       browser: 'chrome',
       os: 'Windows',
-      os_version: '10',
-      name: 'skyux test',
-      build: args.buildNumber,
-      project: args.buildDefinitionName
-    }
+      os_version: '10'
+    }),
+    bs_windows_ie_latest: applyDefaults({
+      browser: 'ie',
+      browser_version: '11',
+      os: 'Windows',
+      os_version: '10'
+    })
   };
 
   // Apply defaults
