@@ -23,7 +23,11 @@ const config = merge(common.config, {
   capabilities: {
     os: 'Windows',
     os_version: '10',
+<<<<<<< Updated upstream
     build: args.project,
+=======
+    build: args.buildNumber,
+>>>>>>> Stashed changes
     'browserstack.localIdentifier': id,
     'browserstack.local': true,
     'browserstack.networkLogs': true,

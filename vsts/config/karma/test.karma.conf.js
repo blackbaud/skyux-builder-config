@@ -22,7 +22,11 @@ function getConfig(config) {
       browser: 'chrome',
       os: 'Windows',
       os_version: '10',
+<<<<<<< Updated upstream
       build: args.project
+=======
+      build: args.buildNumber
+>>>>>>> Stashed changes
     }
   };
 
