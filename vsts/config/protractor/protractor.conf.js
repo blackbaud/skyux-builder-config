@@ -23,7 +23,9 @@ const config = merge(common.config, {
   capabilities: {
     os: 'Windows',
     os_version: '10',
+    name: 'skyux e2e',
     build: args.buildNumber,
+    project: args.buildDefinitionName,
     'browserstack.localIdentifier': id,
     'browserstack.local': true,
     'browserstack.networkLogs': true,

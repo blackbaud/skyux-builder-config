@@ -22,7 +22,9 @@ function getConfig(config) {
       browser: 'chrome',
       os: 'Windows',
       os_version: '10',
-      build: args.buildNumber
+      name: 'skyux test',
+      build: args.buildNumber,
+      project: args.buildDefinitionName
     }
   };
 
