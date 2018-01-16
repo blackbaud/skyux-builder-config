@@ -33,6 +33,7 @@ function applyDefaults(custom) {
  */
 function getConfig(config) {
 
+  // https://www.browserstack.com/automate/protractor#configure-capabilities
   const customLaunchers = {
     bs_windows_chrome_latest: applyDefaults({
       browser: 'chrome',

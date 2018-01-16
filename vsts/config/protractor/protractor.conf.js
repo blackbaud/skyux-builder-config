@@ -16,6 +16,7 @@ const id = 'skyux-spa-' + (new Date()).getTime();
 
 // We rely on the builtin support of BrowserStack by setting browserstackUser/browserstackKey.
 // If we didn't, java would still be considered a requirement.
+// https://www.browserstack.com/automate/protractor#configure-capabilities
 const config = merge(common.config, {
   browserstackUser: args.bsUser,
   browserstackKey: args.bsKey,
