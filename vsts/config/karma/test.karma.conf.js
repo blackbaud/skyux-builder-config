@@ -10,6 +10,38 @@ const logger = require('../utils/logger');
 const args = minimist(process.argv.slice(2));
 
 /**
+ * Adds the necessary configuration for code coverage thresholds.
+ * @param {*} config
+ */
+function addCoverageThreshold(c) {
+  if (c.skyPagesConfig &&
+      c.skyPagesConfig.skyux &&
+      c.skyPagesConfig.skyux.appSettings &&
+      c.skyPagesConfig.skyux.appSettings.codeCoverageThreshold) {
+        
+    const threshold = c.skyPagesConfig.skyux.appSettings.codeCoverageThreshold;
+
+    // Defaults to user-defined individual thresholds
+    let coverage = threshold;
+
+    // One number to rule them all
+    if (typeof threshold === 'number') {
+      coverage = {
+        statements: threshold,
+        branches: threshold,
+        functions: threshold,
+        lines: threshold
+      };
+    }
+
+    // Set the config property
+    c.coverageReporter.check = {
+      global: coverage
+    };
+  }
+}
+
+/**
  * VSTS platform overrides.
  * @name getConfig
  * @param {Object} config
@@ -30,6 +62,9 @@ function getConfig(config) {
 
   // Apply defaults
   shared(config);
+
+  // Apply code coverage thresholds
+  addCoverageThreshold(config);
 
   // For backwards compatability, Karma overwrites arrays
   config.reporters.push('junit');
