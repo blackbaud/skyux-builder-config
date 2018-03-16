@@ -5,6 +5,10 @@ const BrowserstackLocal = require('browserstack-local');
 const { SpecReporter } = require('jasmine-spec-reporter');
 const logger = require('../../../utils/logger');
 
+// Include the "fast selenium" side effect.
+// https://www.browserstack.com/automate/node#add-on
+require('hub-utility/keep-alive');
+
 // This is what ties the tests to the local tunnel that's created
 const id = 'skyux-spa-' + (new Date()).getTime();
 
