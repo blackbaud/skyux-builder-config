@@ -3,7 +3,7 @@
 
 const BrowserstackLocal = require('browserstack-local');
 const minimist = require('minimist');
-const common = require('@blackbaud/skyux-builder/config/protractor/protractor.conf');
+const common = require('@blackbaud/skyux-builder/config/protractor/visual.protractor.conf');
 const merge = require('@blackbaud/skyux-builder/utils/merge');
 const logger = require('../../../utils/logger');
 

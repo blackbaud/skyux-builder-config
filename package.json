@@ -28,10 +28,11 @@
   },
   "devDependencies": {
     "jscs": "3.0.7",
-    "jshint": "2.9.5",
-    "karma": "*"
+    "jshint": "2.9.5"
   },
   "peerDependencies": {
-    "karma": "*"
+    "@blackbaud/skyux-builder": "^1.10.0",
+    "karma": "^1.7.0",
+    "ts-node": "^3.0.0"
   }
 }
