@@ -1,12 +1,8 @@
 /* jshint node: true */
 'use strict';
 
-const minimist = require('minimist');
 const applySharedConfig = require('@blackbaud/skyux-builder/config/karma/shared.karma.conf');
 const { applyBrowserstackKarmaReporter } = require('../../../utils/browserstack-karma-reporter');
-
-// Needed since we bypass Karma cli
-const args = minimist(process.argv.slice(2));
 
 function getConfig(config) {
   applySharedConfig(config);
@@ -18,7 +14,8 @@ function getConfig(config) {
       browser: 'ie',
       browser_version: '11.0',
       os: 'Windows',
-      os_version: '10'
+      os_version: '10',
+      'browserstack.ie.noFlash': 'true'
     },
     bs_windows_edge: {
       base: 'BrowserStack',
@@ -64,8 +61,8 @@ function getConfig(config) {
     browserStack: {
       port: 9876,
       pollingTimeout: 10000,
-      username: args.browserstackUser,
-      accessKey: args.browserstackKey
+      username: process.env.BROWSER_STACK_USERNAME,
+      accessKey: process.env.BROWSER_STACK_ACCESS_KEY
     }
   });
 }
