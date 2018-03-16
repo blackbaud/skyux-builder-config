@@ -1,9 +1,14 @@
 /*jshint jasmine: true, node: true */
 'use strict';
 
+const path = require('path');
 const PixDiff = require('pix-diff');
 const { SpecReporter } = require('jasmine-spec-reporter');
 const { config } = require('./protractor.conf');
+
+config.specs = [
+  path.join(process.cwd(), '**', '*.visual-spec.ts')
+];
 
 config.onPrepare = function () {
   jasmine.getEnv().addReporter(new SpecReporter());
