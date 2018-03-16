@@ -2,13 +2,35 @@
 'use strict';
 
 const BrowserstackLocal = require('browserstack-local');
-const minimist = require('minimist');
+// const minimist = require('minimist');
 const common = require('@blackbaud/skyux-builder/config/protractor/visual.protractor.conf');
 const merge = require('@blackbaud/skyux-builder/utils/merge');
+const PixDiff = require('pix-diff');
 const logger = require('../../../utils/logger');
 
+const getVisualTestConfig = (suffix) => {
+  const config = {
+    basePath: 'screenshots-baseline',
+    diffPath: 'screenshots-diff',
+    createdPath: 'screenshots-created',
+    createdPathDiff: 'screenshots-created-diff',
+    baseline: true,
+    width: 1000,
+    height: 800
+  };
+
+  if (suffix) {
+    config.basePath += `-${suffix}`;
+    config.diffPath += `-${suffix}`;
+    config.createdPath += `-${suffix}`;
+    config.createdPathDiff += `-${suffix}`;
+  }
+
+  return config;
+};
+
 // Needed since we bypass Protractor cli
-const args = minimist(process.argv.slice(2));
+// const args = minimist(process.argv.slice(2));
 
 // This is what ties the tests to the local tunnel that's created
 const id = 'skyux-spa-' + (new Date()).getTime();
@@ -44,6 +66,7 @@ const config = merge(common.config, {
   // Used to open the Browserstack tunnel
   beforeLaunch: () => {
     require('ts-node').register({ ignore: false });
+
     return new Promise((resolve, reject) => {
       const bsConfig = {
         key: process.env.BROWSER_STACK_ACCESS_KEY,
@@ -70,6 +93,11 @@ const config = merge(common.config, {
 
   // Used to grab the Browserstack session
   onPrepare: () => new Promise((resolve, reject) => {
+    // browser.params.chunks = JSON.parse(browser.params.chunks);
+    // browser.params.skyPagesConfig = JSON.parse(browser.params.skyPagesConfig);
+    browser.skyVisualTestConfig = getVisualTestConfig();
+    browser.pixDiff = new PixDiff(browser.skyVisualTestConfig);
+
     browser
       .driver
       .getSession()

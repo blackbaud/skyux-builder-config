@@ -33,6 +33,7 @@
   "peerDependencies": {
     "@blackbaud/skyux-builder": "^1.10.0",
     "karma": "^1.7.0",
+    "pix-diff": "^2.0.0",
     "ts-node": "^3.0.0"
   }
 }
