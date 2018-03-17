@@ -4,7 +4,10 @@
 const path = require('path');
 const minimist = require('minimist');
 const shared = require('@blackbaud/skyux-builder/config/karma/shared.karma.conf');
-const { applyBrowserstackKarmaReporter } = require('../../../utils/browserstack-karma-reporter');
+
+const {
+  applyBrowserstackKarmaReporter
+} = require('../../../shared/utils/browserstack-karma-reporter');
 
 // Needed since we bypass Karma cli
 const args = minimist(process.argv.slice(2));

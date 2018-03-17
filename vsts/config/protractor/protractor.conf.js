@@ -5,7 +5,7 @@ const BrowserstackLocal = require('browserstack-local');
 const minimist = require('minimist');
 const common = require('@blackbaud/skyux-builder/config/protractor/protractor.conf');
 const merge = require('@blackbaud/skyux-builder/utils/merge');
-const logger = require('../../../utils/logger');
+const logger = require('../../../shared/utils/logger');
 
 // Needed since we bypass Protractor cli
 const args = minimist(process.argv.slice(2));

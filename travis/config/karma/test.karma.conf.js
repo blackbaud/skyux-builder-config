@@ -2,7 +2,10 @@
 'use strict';
 
 const applySharedConfig = require('@blackbaud/skyux-builder/config/karma/shared.karma.conf');
-const { applyBrowserstackKarmaReporter } = require('../../../utils/browserstack-karma-reporter');
+
+const {
+  applyBrowserstackKarmaReporter
+} = require('../../../shared/utils/browserstack-karma-reporter');
 
 function getConfig(config) {
   applySharedConfig(config);
