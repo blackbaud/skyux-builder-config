@@ -3,13 +3,11 @@
 
 const applySharedConfig = require('@blackbaud/skyux-builder/config/karma/shared.karma.conf');
 
-const {
-  applyBrowserstackKarmaReporter
-} = require('../../../shared/utils/browserstack-karma-reporter');
+const { applyReporter } = require('../../../shared/utils/reporter');
 
 function getConfig(config) {
   applySharedConfig(config);
-  applyBrowserstackKarmaReporter(config);
+  applyReporter(config);
 
   const customLaunchers = {
     bs_windows_ie_11: {

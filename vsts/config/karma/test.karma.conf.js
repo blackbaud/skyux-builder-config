@@ -3,11 +3,8 @@
 
 const path = require('path');
 const minimist = require('minimist');
-const shared = require('@blackbaud/skyux-builder/config/karma/shared.karma.conf');
-
-const {
-  applyBrowserstackKarmaReporter
-} = require('../../../shared/utils/browserstack-karma-reporter');
+const applySharedConfig = require('@blackbaud/skyux-builder/config/karma/shared.karma.conf');
+const { applyReporter } = require('../../../shared/utils/reporter');
 
 // Needed since we bypass Karma cli
 const args = minimist(process.argv.slice(2));
@@ -31,9 +28,8 @@ function getConfig(config) {
     }
   };
 
-  // Apply defaults
-  shared(config);
-  applyBrowserstackKarmaReporter(config);
+  applySharedConfig(config);
+  applyReporter(config);
 
   // For backwards compatability, Karma overwrites arrays
   config.reporters.push('junit');

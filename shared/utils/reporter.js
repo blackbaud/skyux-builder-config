@@ -3,7 +3,7 @@
 
 const logger = require('./logger');
 
-function applyBrowserstackKarmaReporter(config) {
+function applyReporter(config) {
   // Custom plugin used to read the Browserstack session
   config.reporters.push('blackbaud-browserstack');
   config.plugins.push({
@@ -17,5 +17,5 @@ function applyBrowserstackKarmaReporter(config) {
 }
 
 module.exports = {
-  applyBrowserstackKarmaReporter
+  applyReporter
 };
