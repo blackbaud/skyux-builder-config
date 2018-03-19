@@ -3,7 +3,6 @@
 
 const BrowserstackLocal = require('browserstack-local');
 const { SpecReporter } = require('jasmine-spec-reporter');
-const logger = require('../../../shared/utils/logger');
 
 // Include the "fast selenium" side effect.
 // https://www.browserstack.com/automate/node#add-on
@@ -71,19 +70,9 @@ config = Object.assign(config, {
     });
   },
 
-  // Used to grab the Browserstack session
-  onPrepare: () => new Promise((resolve, reject) => {
+  onPrepare: function () {
     jasmine.getEnv().addReporter(new SpecReporter());
-
-    browser
-      .driver
-      .getSession()
-      .then(session => {
-        logger.session(session.getId());
-        resolve();
-      })
-      .catch(reject);
-  }),
+  },
 
   // Used to close the Browserstack tunnel
   afterLaunch: () => new Promise((resolve) => {
