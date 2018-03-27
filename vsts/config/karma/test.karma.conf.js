@@ -51,10 +51,10 @@ function getConfig(config) {
   config.set({
     browsers: Object.keys(customLaunchers),
     customLaunchers: customLaunchers,
-    browserDisconnectTimeout: 3e5,
+    browserDisconnectTimeout: 3e10,
     browserDisconnectTolerance: 3,
-    browserNoActivityTimeout: 3e5,
-    captureTimeout: 3e5,
+    browserNoActivityTimeout: 3e10,
+    captureTimeout: 3e10,
     junitReporter: {
       outputDir: path.join(process.cwd(), 'test-results')
     },
