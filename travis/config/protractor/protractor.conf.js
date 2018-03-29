@@ -6,7 +6,7 @@ const { SpecReporter } = require('jasmine-spec-reporter');
 
 // Include the "fast selenium" side effect.
 // https://www.browserstack.com/automate/node#add-on
-require('hub-utility/keep-alive');
+require('../../../shared/utils/fast-selenium');
 
 // This is what ties the tests to the local tunnel that's created
 const id = 'skyux-spa-' + (new Date()).getTime();
