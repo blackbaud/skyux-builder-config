@@ -1,10 +1,9 @@
 /* jshint node: true */
 'use strict';
 
-const applySharedConfig = require('@blackbaud/skyux-builder/config/karma/shared.karma.conf');
+const applySharedConfig = require('../../../shared/karma/shared.karma.conf');
 
 function getConfig(config) {
-  applySharedConfig(config);
 
   const customLaunchers = {
     bs_windows_ie_11: {
@@ -12,8 +11,7 @@ function getConfig(config) {
       browser: 'ie',
       browser_version: '11.0',
       os: 'Windows',
-      os_version: '10',
-      'browserstack.ie.noFlash': 'true'
+      os_version: '10'
     },
     bs_windows_edge: {
       base: 'BrowserStack',
@@ -53,16 +51,15 @@ function getConfig(config) {
     }
   };
 
+  applySharedConfig(config);
+
   config.set({
     browsers: Object.keys(customLaunchers),
-    customLaunchers: customLaunchers,
-    browserStack: {
-      port: 9876,
-      pollingTimeout: 10000,
-      username: process.env.BROWSER_STACK_USERNAME,
-      accessKey: process.env.BROWSER_STACK_ACCESS_KEY
-    }
+    customLaunchers: customLaunchers
   });
+
+  config.browserStack.username = process.env.BROWSER_STACK_USERNAME;
+  config.browserStack.accessKey = process.env.BROWSER_STACK_ACCESS_KEY;
 }
 
 module.exports = getConfig;
