@@ -61,6 +61,7 @@ function getConfig(config) {
     browserStack: {
       port: 9876,
       pollingTimeout: 10000,
+      timeout: 600,
       username: args.bsUser,
       accessKey: args.bsKey
     }
