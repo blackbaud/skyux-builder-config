@@ -58,6 +58,17 @@ function getConfig(config) {
     junitReporter: {
       outputDir: path.join(process.cwd(), 'test-results')
     },
+
+    // VSTS doesn't render default symbols well.
+    mochaReporter: {
+      symbols: {
+        success: '+',
+        info: '#',
+        warning: '!',
+        error: 'x'
+      }
+    },
+    
     browserStack: {
       port: 9876,
       pollingTimeout: 10000,
