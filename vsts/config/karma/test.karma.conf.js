@@ -52,6 +52,16 @@ function getConfig(config) {
     customLaunchers: customLaunchers,
     junitReporter: {
       outputDir: path.join(process.cwd(), 'test-results')
+    },
+
+    // VSTS doesn't render default symbols well.
+    mochaReporter: {
+      symbols: {
+        success: '+',
+        info: '#',
+        warning: '!',
+        error: 'x'
+      }
     }
   });
 
