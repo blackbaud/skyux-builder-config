@@ -4,7 +4,7 @@
 const path = require('path');
 const minimist = require('minimist');
 const applySharedConfig = require('../../../shared/karma/shared.karma.conf');
-const { printSessionResults } = require('../utils/session-logger');
+const sessionLogger = require('../utils/session-logger');
 
 // Needed since we bypass Karma cli
 const args = minimist(process.argv.slice(2));
@@ -42,7 +42,8 @@ function getConfig(config) {
     'reporter:blackbaud-browserstack': [
       'type',
       function (/* BrowserStack:sessionMapping */ sessions) {
-        this.onBrowserComplete = (browser) => printSessionResults(sessions[browser.id]);
+        this.onBrowserComplete = (browser) =>
+          sessionLogger.printSessionResults(sessions[browser.id]);
       }
     ]
   });

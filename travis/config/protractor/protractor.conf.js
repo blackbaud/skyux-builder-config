@@ -3,9 +3,9 @@
 
 const merge = require('@blackbaud/skyux-builder/utils/merge');
 const { SpecReporter } = require('jasmine-spec-reporter');
-const { getConfig } = require('../../../shared/protractor/shared.protractor.conf');
+const sharedConfig = require('../../../shared/protractor/shared.protractor.conf');
 
-const config = getConfig({
+const config = sharedConfig.getConfig({
   browserstackUser: process.env.BROWSER_STACK_USERNAME,
   browserstackKey: process.env.BROWSER_STACK_ACCESS_KEY
 });

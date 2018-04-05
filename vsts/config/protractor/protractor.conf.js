@@ -4,13 +4,13 @@
 
 const minimist = require('minimist');
 const merge = require('@blackbaud/skyux-builder/utils/merge');
-const { getConfig } = require('../../../shared/protractor/shared.protractor.conf');
-const { printSessionResults } = require('../utils/session-logger');
+const sharedConfig = require('../../../shared/protractor/shared.protractor.conf');
+const sessionLogger = require('../utils/session-logger');
 
 // Needed since we bypass Protractor CLI.
 const args = minimist(process.argv.slice(2));
 
-const config = getConfig({
+const config = sharedConfig.getConfig({
   browserstackUser: args.bsUser,
   browserstackKey: args.bsKey
 });
@@ -28,6 +28,6 @@ exports.config = merge(config, {
   onPrepare() {
     return browser.driver
       .getSession()
-      .then(session => printSessionResults(session.getId()));
+      .then(session => sessionLogger.printSessionResults(session.getId()));
   }
 });
