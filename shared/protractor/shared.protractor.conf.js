@@ -24,7 +24,6 @@ function getConfig(options) {
     directConnect: false,
     capabilities: {
       acceptSslCerts: true,
-      resolution: '1280x960',
       'browserstack.local': true,
       'browserstack.networkLogs': true,
       'browserstack.debug': true,

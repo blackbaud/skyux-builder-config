@@ -11,6 +11,8 @@ config.specs = [
   path.join(process.cwd(), '**', '*.visual-spec.ts')
 ];
 
+config.capabilities.resolution = '1280x960';
+
 config.onPrepare = function () {
   jasmine.getEnv().addReporter(new SpecReporter());
 
