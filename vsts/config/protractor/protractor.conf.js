@@ -25,9 +25,16 @@ exports.config = merge(config, {
   },
 
   // Used to grab the Browserstack session
-  onPrepare() {
-    return browser.driver
-      .getSession()
-      .then(session => sessionLogger.printSessionResults(session.getId()));
+  onPrepare: function () {
+    return new Promise((resolve, reject) => {
+      browser
+        .driver
+        .getSession()
+        .then(session => {
+          sessionLogger.printSessionResults(session.getId());
+          resolve();
+        })
+        .catch(reject);
+    });
   }
 });

@@ -76,6 +76,4 @@ function getConfig(options) {
   return config;
 }
 
-module.exports = {
-  getConfig
-};
+exports.getConfig = getConfig;
