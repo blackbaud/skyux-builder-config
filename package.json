@@ -23,6 +23,8 @@
   "dependencies": {
     "@blackbaud/skyux-logger": "1.0.2",
     "browserstack-local": "1.3.0",
+    "http": "0.0.0",
+    "https": "1.0.0",
     "karma-browserstack-launcher": "1.3.0",
     "karma-junit-reporter": "1.2.0",
     "minimist": "1.2.0"

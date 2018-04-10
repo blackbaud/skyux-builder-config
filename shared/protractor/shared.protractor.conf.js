@@ -14,7 +14,7 @@ function getConfig(options) {
 
   // This is what ties the tests to the local tunnel that's created.
   const currentTime = new Date().getTime();
-  const id = `skyux-spa-${currentTime}`;
+  const LOCAL_IDENTIFIER = `skyux-spa-${currentTime}`;
 
   // We rely on the builtin support of BrowserStack by setting browserstackUser/browserstackKey.
   // If we didn't, java would still be considered a requirement.
@@ -23,13 +23,10 @@ function getConfig(options) {
     browserstackKey: options.browserstackKey,
     directConnect: false,
     capabilities: {
-      acceptSslCerts: true,
+      'browserstack.localIdentifier': LOCAL_IDENTIFIER,
       'browserstack.local': true,
       'browserstack.networkLogs': true,
-      'browserstack.debug': true,
-      'browserstack.user': options.browserstackUser,
-      'browserstack.key': options.browserstackKey,
-      'browserstack.localIdentifier': id
+      'browserstack.debug': true
     },
 
     // Used to open the Browserstack tunnel
@@ -37,12 +34,11 @@ function getConfig(options) {
       require('ts-node').register({ ignore: false });
 
       const bsConfig = {
-        user: options.browserstackUser,
         key: options.browserstackKey,
         onlyAutomate: true,
         forceLocal: true,
         force: true,
-        localIdentifier: id,
+        localIdentifier: LOCAL_IDENTIFIER,
         verbose: true
       };
 

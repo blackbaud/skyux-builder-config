@@ -30,10 +30,10 @@ if (http.globalAgent && http.globalAgent.hasOwnProperty('keepAlive')) {
 
   http.request = function (options, callback) {
     if (options.protocol === 'https:') {
-      options['agent'] = secureAgent;
+      options.agent = secureAgent;
       return httpsRequest(options, callback);
     } else {
-      options['agent'] = agent;
+      options.agent = agent;
       return httpRequest(options, callback);
     }
   };
