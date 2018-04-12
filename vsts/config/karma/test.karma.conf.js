@@ -74,7 +74,8 @@ function getConfig(config) {
       pollingTimeout: 10000,
       timeout: 600,
       username: args.bsUser,
-      accessKey: args.bsKey
+      accessKey: args.bsKey,
+      enableLoggingForApi: true
     }
   });
 }

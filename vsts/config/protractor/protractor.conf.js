@@ -29,7 +29,8 @@ const config = merge(common.config, {
     'browserstack.localIdentifier': id,
     'browserstack.local': true,
     'browserstack.networkLogs': true,
-    'browserstack.debug': true
+    'browserstack.debug': true,
+    'browserstack.enableLoggingForApi': true
   },
 
   // Used to open the Browserstack tunnel
