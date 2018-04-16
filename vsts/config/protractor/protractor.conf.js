@@ -43,7 +43,8 @@ const config = merge(common.config, {
         forceLocal: true,
         force: true,
         localIdentifier: id,
-        verbose: true
+        verbose: true,
+        'enable-logging-for-api': true
       };
 
       console.log('Attempting to connect to Browserstack.');
