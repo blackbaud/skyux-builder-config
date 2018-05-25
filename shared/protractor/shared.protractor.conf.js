@@ -26,7 +26,8 @@ function getConfig(options) {
       'browserstack.localIdentifier': LOCAL_IDENTIFIER,
       'browserstack.local': true,
       'browserstack.networkLogs': true,
-      'browserstack.debug': true
+      'browserstack.debug': true,
+      'browserstack.enable-logging-for-api': true
     },
 
     // Used to open the Browserstack tunnel
@@ -39,7 +40,8 @@ function getConfig(options) {
         forceLocal: true,
         force: true,
         localIdentifier: LOCAL_IDENTIFIER,
-        verbose: true
+        verbose: true,
+        'enable-logging-for-api': true
       };
 
       return new Promise((resolve, reject) => {
