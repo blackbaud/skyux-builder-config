@@ -5,6 +5,7 @@
 const minimist = require('minimist');
 const merge = require('@blackbaud/skyux-builder/utils/merge');
 const sharedConfig = require('../../../shared/protractor/shared.protractor.conf');
+const getSkyE2EConfig = require('../../../shared/protractor/skyux-lib-e2e-config');
 const sessionLogger = require('../utils/session-logger');
 
 // Needed since we bypass Protractor CLI.
@@ -26,6 +27,7 @@ exports.config = merge(config, {
 
   // Used to grab the Browserstack session
   onPrepare: () => new Promise((resolve, reject) => {
+    browser.skyE2E = getSkyE2EConfig();
     browser
       .driver
       .getSession()
