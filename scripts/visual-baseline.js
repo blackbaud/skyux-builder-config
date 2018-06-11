@@ -12,7 +12,6 @@ const {
   getOriginUrl
 } = require('./utils');
 
-const githubAccessToken = process.env.SKY_VISUAL_BASELINES_ACCESS_TOKEN;
 const baselineScreenshotsDir = 'screenshots-baseline';
 const tempDir = '.skypagesvisualbaselinetemp';
 
@@ -31,7 +30,6 @@ function handleBaselineScreenshots() {
       baselineScreenshotsDir,
       path.resolve(tempDir, baselineScreenshotsDir)
     ))
-
     .then(() => exec('git', ['checkout', '-b', branch], opts))
     .then(() => exec('git', ['add', baselineScreenshotsDir], opts))
     .then(() => exec('git', ['commit', '-m', `Build #${buildId}: Added new baseline screenshots.`], opts))
@@ -43,7 +41,10 @@ function checkScreenshots() {
     // Get origin URL.
     .then(() => getOriginUrl())
     .then((url) => {
-      gitOriginUrl = url.replace('https://', `https://${githubAccessToken}@`);
+      gitOriginUrl = url.replace(
+        'https://',
+        `https://${process.env.SKY_VISUAL_BASELINES_ACCESS_TOKEN}@`
+      );
     })
 
     // Check baseline screenshots.
