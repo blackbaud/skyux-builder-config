@@ -1,9 +1,10 @@
 /*jshint node: true*/
 'use strict';
 
-module.exports = {
-  session: (session) => {
-    console.log(
+const logger = require('@blackbaud/skyux-logger');
+
+function printSessionResults(session) {
+  logger.info(
 `
 
 
@@ -13,6 +14,9 @@ https://host.nxt.blackbaud.com/browserstack/sessions/${session}
 ****************************************************************************************************
 
 `
-    );
-  }
+  );
+}
+
+module.exports = {
+  printSessionResults
 };

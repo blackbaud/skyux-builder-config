@@ -3,8 +3,8 @@
 
 const path = require('path');
 const minimist = require('minimist');
-const shared = require('@blackbaud/skyux-builder/config/karma/shared.karma.conf');
-const logger = require('../utils/logger');
+const applySharedConfig = require('../../../shared/karma/shared.karma.conf');
+const sessionLogger = require('../utils/session-logger');
 
 // Needed since we bypass Karma cli
 const args = minimist(process.argv.slice(2));
@@ -28,8 +28,7 @@ function getConfig(config) {
     }
   };
 
-  // Apply defaults
-  shared(config);
+  applySharedConfig(config);
 
   // For backwards compatability, Karma overwrites arrays
   config.reporters.push('junit');
@@ -43,7 +42,8 @@ function getConfig(config) {
     'reporter:blackbaud-browserstack': [
       'type',
       function (/* BrowserStack:sessionMapping */ sessions) {
-        this.onBrowserComplete = (browser) => logger.session(sessions[browser.id]);
+        this.onBrowserComplete = (browser) =>
+          sessionLogger.printSessionResults(sessions[browser.id]);
       }
     ]
   });
@@ -51,10 +51,6 @@ function getConfig(config) {
   config.set({
     browsers: Object.keys(customLaunchers),
     customLaunchers: customLaunchers,
-    browserDisconnectTimeout: 6e5,
-    browserDisconnectTolerance: 3,
-    browserNoActivityTimeout: 6e5,
-    captureTimeout: 6e5,
     junitReporter: {
       outputDir: path.join(process.cwd(), 'test-results')
     },
@@ -67,17 +63,11 @@ function getConfig(config) {
         warning: '!',
         error: 'x'
       }
-    },
-    
-    browserStack: {
-      port: 9876,
-      pollingTimeout: 10000,
-      timeout: 600,
-      username: args.bsUser,
-      accessKey: args.bsKey,
-      enableLoggingForApi: true
     }
   });
+
+  config.browserStack.username = args.bsUser;
+  config.browserStack.accessKey = args.bsKey;
 }
 
 module.exports = getConfig;
