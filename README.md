@@ -6,8 +6,7 @@ Configuration files for SKY UX Builder when running on different platforms.
 
 ### Environment variables needed
 
-#### Visual Failures
-- `VISUAL_FAILURES_ACCESS_TOKEN` An access token created by [blackbaud/skyux-visualtest-results](https://github.com/blackbaud/skyux-visualtest-results) repo owners. This token is provided to each SPA on-request.
-
-#### Visual Baselines
-- `VISUAL_BASELINES_ACCESS_TOKEN` An access token created by the SPA repo owners.
+- `BROWSER_STACK_USERNAME`
+- `BROWSER_STACK_ACCESS_KEY`
+- `SKY_VISUAL_FAILURES_ACCESS_TOKEN` An access token created by [blackbaud/skyux-visualtest-results](https://github.com/blackbaud/skyux-visualtest-results) repo owners. This token is provided to each SPA on-request.
+- `SKY_VISUAL_BASELINES_ACCESS_TOKEN` An access token created by the SPA repo owners.

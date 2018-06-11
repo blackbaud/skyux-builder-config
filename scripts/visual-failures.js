@@ -6,13 +6,13 @@ const rimraf = require('rimraf');
 const path = require('path');
 
 const {
-  exec,
   dirHasChanges,
+  exec,
   getFeatureBranch,
   getOriginUrl
 } = require('./utils');
 
-const githubAccessToken = process.env.VISUAL_FAILURES_ACCESS_TOKEN;
+const githubAccessToken = process.env.SKY_VISUAL_FAILURES_ACCESS_TOKEN;
 const webdriverDir = 'skyux-visualtest-results';
 const diffScreenshotsDir = 'screenshots-diff';
 

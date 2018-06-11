@@ -12,7 +12,7 @@ const {
   getOriginUrl
 } = require('./utils');
 
-const githubAccessToken = process.env.VISUAL_BASELINES_ACCESS_TOKEN;
+const githubAccessToken = process.env.SKY_VISUAL_BASELINES_ACCESS_TOKEN;
 const baselineScreenshotsDir = 'screenshots-baseline';
 const tempDir = '.skypagesvisualbaselinetemp';
 
