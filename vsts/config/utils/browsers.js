@@ -7,18 +7,13 @@ const get = require('lodash.get');
 // We normalize properties despite Browserstack/Protractor/Karma using different keys.
 const map = {
   'e2e': {
-    os: 'os',
     osVersion: 'os_version',
     browser: 'browserName',
     browserVersion: 'browser_version',
-    device: 'device'
   },
   'unit': {
-    os: 'os',
     osVersion: 'os_version',
-    browser: 'browser',
     browserVersion: 'browser_version',
-    device: 'device'
   }
 };
 
