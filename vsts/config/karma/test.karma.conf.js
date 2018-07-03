@@ -25,7 +25,7 @@ function getLaunchers(config) {
   // Karma needs object with key/value pairs.
   if (browsers) {
     const launchers = {};
-    browsers.forEach(browser => launchers[browser[key]] = browser);
+    browsers.forEach(browser => launchers[browser.key] = browser);
     return launchers;
   }
 }

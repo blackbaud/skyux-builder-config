@@ -23,7 +23,7 @@ const map = {
 module.exports = {
   getBrowsers: (config, testSuite, defaults) => {
 
-    const browsers = get(config, `skyPagesConfig.skyux.testSettings.${testSuite}.browsers`);
+    const browsers = get(config, `skyPagesConfig.skyux.testSettings.${testSuite}.browsers`, []);
     const allowedPropertiesMap = map[testSuite];
     const allowedPropertiesKeys = Object.keys(allowedPropertiesMap);
 
