@@ -37,14 +37,15 @@ const capabilities = getCapabilities(common.config);
 
 // In the case of e2e, there's nothing we need to override for VSTS that's not specific to BS.
 if (capabilities && capabilities.length) {
-  overrides = {
 
+  overrides = {
     // We rely on the builtin support of BrowserStack by setting browserstackUser/browserstackKey.
     // If we didn't, java would still be considered a requirement.
     browserstackUser: args.bsUser,
     browserstackKey: args.bsKey,
     directConnect: false,
-    capabilities: capabilities,
+    capabilities: null,
+    multiCapabilities: capabilities,
 
     // Used to open the Browserstack tunnel
     beforeLaunch: () => {
