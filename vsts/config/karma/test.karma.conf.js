@@ -83,7 +83,9 @@ function getConfig(config) {
   if (launchers) {
     overrides.customLaunchers = launchers;
     overrides.browsers = Object.keys(launchers);
-    overrides.browserstack = {
+
+    // "browserStack" is case-sensitive.  That was a fun one to track down.
+    overrides.browserStack = {
       port: 9876,
       pollingTimeout: 10000,
       timeout: 600,
