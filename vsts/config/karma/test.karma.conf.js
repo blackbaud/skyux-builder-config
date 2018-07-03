@@ -4,66 +4,30 @@
 const path = require('path');
 const minimist = require('minimist');
 const shared = require('@blackbaud/skyux-builder/config/karma/test.karma.conf');
-const logger = require('../utils/logger');
+const logger = require('@blackbaud/skyux-logger');
+const browserUtils = require('../utils/browsers');
 
 // Needed since we bypass Karma cli
 const args = minimist(process.argv.slice(2));
 
 /**
- * Verifies if any custom browsers are defined
+ * Gets any custom defined browsers and converts them to launchers.
  * @param {*} config
  */
-function getBrowsers(config) {
-  if (config
-    && config.skyPagesConfig
-    && config.skyPagesConfig.skyux.testSettings
-    && config.skyPagesConfig.skyux.testSettings.unit
-    && config.skyPagesConfig.skyux.testSettings.unit.browsers
-    && config.skyPagesConfig.skyux.testSettings.unit.browsers.length) {
-      return config.skyPagesConfig.skyux.testSettings.unit.browsers;
-    }
-}
-
-/**
- * Assumes custom browsers exist, apply our default properties to them.
- * Basically, converts the browsers to launchers.
- * @param {*} customBrowsers
- */
-function getLaunchers(browsers) {
-  const launchers = {};
-
-  const browserstackMap = {
-    'os': 'os',
-    'osVersion': 'os_version',
-    'browser': 'browser',
-    'browserVersion': 'browser_version'
-  };
-
-  const browserstackKeys = Object.keys(browserstackMap);
-
-  browsers.forEach(browser => {
-    const browserKey = [
-      browser.os || 'default',
-      browser.osVersion || 'default',
-      browser.browser || 'default',
-      browser.browserVersion || 'default'
-    ].join('_');
-
-    launchers[browserKey] = {
-      base: 'BrowserStack',
-      name: 'skyux test',
-      build: args.buildNumber,
-      project: args.buildDefinitionName
-    };
-
-    browserstackKeys.forEach(key => {
-      if (browser[key]) {
-        launchers[browserKey][browserstackMap[key]] = browser[key];
-      }
-    });
+function getLaunchers(config) {
+  const browsers = browserUtils.getBrowsers(config, 'unit', {
+    base: 'BrowserStack',
+    name: 'skyux test',
+    build: args.buildNumber,
+    project: args.buildDefinitionName
   });
 
-  return launchers;
+  // Karma needs object with key/value pairs.
+  if (browsers) {
+    const launchers = {};
+    browsers.forEach(browser => launchers[browser[key]] = browser);
+    return launchers;
+  }
 }
 
 /**
@@ -88,7 +52,7 @@ function getConfig(config) {
     'reporter:blackbaud-browserstack': [
       'type',
       function (/* BrowserStack:sessionMapping */ sessions) {
-        this.onBrowserComplete = (browser) => logger.session(sessions[browser.id]);
+        this.onBrowserComplete = (browser) => browserUtils.logSession(sessions[browser.id]);
       }
     ]
   });
@@ -114,11 +78,11 @@ function getConfig(config) {
     }
   };
 
-  // Only override "browsers" property if there are customLaunchers
-  const browsers = getBrowsers(config);
-  if (browsers) {
-    overrides.customLaunchers = getLaunchers(browsers);
-    overrides.browsers = Object.keys(overrides.customLaunchers);
+  // Only override certain properties if there are customLaunchers
+  const launchers = getLaunchers(config);
+  if (launchers) {
+    overrides.customLaunchers = launchers;
+    overrides.browsers = Object.keys(launchers);
     overrides.browserstack = {
       port: 9876,
       pollingTimeout: 10000,
@@ -130,6 +94,7 @@ function getConfig(config) {
   }
 
   config.set(overrides);
+  logger.verbose(config);
 }
 
 module.exports = getConfig;
