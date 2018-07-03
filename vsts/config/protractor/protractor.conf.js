@@ -35,8 +35,19 @@ function getBrowsers(config) {
  * @param {*} customBrowsers
  */
 function getCapabilities(browsers) {
+
+  // We normalize properties between e2e/unit settings, but Browserstack needs them differently.
+  const browserstackMap = {
+    'os': 'os',
+    'osVersion': 'os_version',
+    'browser': 'browserName',
+    'browserVersion': 'browser_version'
+  };
+
+  const browserstackKeys = Object.keys(browserstackMap);
+
   return browsers.map(capabilitiy => {
-    return Object.assign({}, capability, {
+    const capabilitiesMapped = {
       name: 'skyux e2e',
       build: args.buildNumber,
       project: args.buildDefinitionName,
@@ -45,7 +56,15 @@ function getCapabilities(browsers) {
       'browserstack.networkLogs': true,
       'browserstack.debug': true,
       'browserstack.enable-logging-for-api': true
+    };
+    
+    browserstackKeys.forEach(key => {
+      if (capabilitiy[key]) {
+        capabilitiesMapped[browserstackMap[key]] = capabilitiy[key];
+      }
     });
+
+    return capabilitiesMapped;
   });
 }
 

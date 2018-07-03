@@ -32,19 +32,34 @@ function getBrowsers(config) {
 function getLaunchers(browsers) {
   const launchers = {};
 
-  browsers.forEach(launcher => {
-    const key = [
-      launcher.os,
-      launcher.osVersion,
-      launcher.browser,
-      launcher.browserVersion
+  const browserstackMap = {
+    'os': 'os',
+    'osVersion': 'os_version',
+    'browser': 'browser',
+    'browserVersion': 'browser_version'
+  };
+
+  const browserstackKeys = Object.keys(browserstackMap);
+
+  browsers.forEach(browser => {
+    const browserKey = [
+      browser.os || 'default',
+      browser.osVersion || 'default',
+      browser.browser || 'default',
+      browser.browserVersion || 'default'
     ].join('_');
 
-    launchers[key] = Object.assign({}, launcher, {
+    launchers[browserKey] = {
       base: 'BrowserStack',
       name: 'skyux test',
       build: args.buildNumber,
       project: args.buildDefinitionName
+    };
+
+    browserstackKeys.forEach(key => {
+      if (browser[key]) {
+        launchers[browserKey][browserstackMap[key]] = browser[key];
+      }
     });
   });
 
