@@ -10,13 +10,15 @@ const map = {
     os: 'os',
     osVersion: 'os_version',
     browser: 'browserName',
-    browserVersion: 'browser_version'
+    browserVersion: 'browser_version',
+    device: 'device'
   },
   'unit': {
     os: 'os',
     osVersion: 'os_version',
     browser: 'browser',
-    browserVersion: 'browser_version'
+    browserVersion: 'browser_version',
+    device: 'device'
   }
 };
 
