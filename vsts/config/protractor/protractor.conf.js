@@ -36,7 +36,7 @@ let overrides = {};
 const capabilities = getCapabilities(common.config);
 
 // In the case of e2e, there's nothing we need to override for VSTS that's not specific to BS.
-if (capabilities) {
+if (capabilities && capabilities.length) {
   overrides = {
 
     // We rely on the builtin support of BrowserStack by setting browserstackUser/browserstackKey.
