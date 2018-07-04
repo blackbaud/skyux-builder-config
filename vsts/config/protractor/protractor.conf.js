@@ -28,7 +28,25 @@ function getCapabilities(config) {
     'browserstack.local': true,
     'browserstack.networkLogs': true,
     'browserstack.debug': true,
-    'browserstack.enable-logging-for-api': true
+    'browserstack.console': 'verbose',
+    'browserstack.enable-logging-for-api': true,
+
+    // The following section is necessary to get Chrome, Firefox, and Edge to trust our cert.
+    // Setitng all of these as a convenience, regardless of what browser is specified.
+
+    // Firefox
+    acceptSslCerts: true,
+    acceptInsecureCerts: true,
+
+    // Edge
+    trustAllSSLCerficates: true,
+
+    // Chrome
+    chromeOptions: {
+      args: [
+        '--ignore-certificate-errors'
+      ]
+    }
   });
 }
 
@@ -49,7 +67,6 @@ if (capabilities && capabilities.length) {
 
     // Used to open the Browserstack tunnel
     beforeLaunch: () => {
-      require('ts-node').register({ ignore: false });
       return new Promise((resolve, reject) => {
         const bsConfig = {
           key: args.bsKey,
@@ -77,6 +94,7 @@ if (capabilities && capabilities.length) {
 
     // Used to grab the Browserstack session
     onPrepare: () => new Promise((resolve, reject) => {
+      require('ts-node').register({ ignore: false });
       browser
         .driver
         .getSession()
