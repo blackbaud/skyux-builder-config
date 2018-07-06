@@ -66,31 +66,29 @@ if (capabilities && capabilities.length) {
     multiCapabilities: capabilities,
 
     // Used to open the Browserstack tunnel
-    beforeLaunch: () => {
-      return new Promise((resolve, reject) => {
-        const bsConfig = {
-          key: args.bsKey,
-          onlyAutomate: true,
-          forceLocal: true,
-          force: true,
-          localIdentifier: id,
-          verbose: true,
-          'enable-logging-for-api': true
-        };
+    beforeLaunch: () => new Promise((resolve, reject) => {
+      const bsConfig = {
+        key: args.bsKey,
+        onlyAutomate: true,
+        forceLocal: true,
+        force: true,
+        localIdentifier: id,
+        verbose: true,
+        'enable-logging-for-api': true
+      };
 
-        logger.info('Attempting to connect to Browserstack.');
-        exports.bsLocal = new BrowserstackLocal.Local();
-        exports.bsLocal.start(bsConfig, (err) => {
-          if (err) {
-            logger.error('Error connecting to Browserstack.');
-            reject(err);
-          } else {
-            logger.info('Connected to Browserstack.  Beginning e2e tests.');
-            resolve();
-          }
-        });
+      logger.info('Attempting to connect to Browserstack.');
+      exports.bsLocal = new BrowserstackLocal.Local();
+      exports.bsLocal.start(bsConfig, (err) => {
+        if (err) {
+          logger.error('Error connecting to Browserstack.');
+          reject(err);
+        } else {
+          logger.info('Connected to Browserstack.  Beginning e2e tests.');
+          resolve();
+        }
       });
-    },
+    }),
 
     // Used to grab the Browserstack session
     onPrepare: () => new Promise((resolve, reject) => {
