@@ -24,29 +24,13 @@ function getCapabilities(config) {
     name: 'skyux e2e',
     build: args.buildNumber,
     project: args.buildDefinitionName,
+    acceptSslCerts: true,
     'browserstack.localIdentifier': id,
     'browserstack.local': true,
     'browserstack.networkLogs': true,
     'browserstack.debug': true,
     'browserstack.console': 'verbose',
     'browserstack.enable-logging-for-api': true,
-
-    // The following section is necessary to get Chrome, Firefox, and Edge to trust our cert.
-    // Setitng all of these as a convenience, regardless of what browser is specified.
-
-    // Firefox
-    acceptSslCerts: true,
-    acceptInsecureCerts: true,
-
-    // Edge
-    trustAllSSLCerficates: true,
-
-    // Chrome
-    chromeOptions: {
-      args: [
-        '--ignore-certificate-errors'
-      ]
-    }
   });
 }
 
