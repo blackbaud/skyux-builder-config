@@ -26,7 +26,7 @@ module.exports = {
 
     return browsers.map(browser => {
 
-      // Copies properties do we don't alter original.
+      // Copies properties so we don't alter original.
       // Creates a unique key
       const browserMapped = Object.assign({}, browser, {
         key: [

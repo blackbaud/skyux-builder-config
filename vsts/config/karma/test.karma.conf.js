@@ -46,17 +46,6 @@ function getConfig(config) {
     type: 'cobertura'
   });
 
-  // Custom plugin used to read the Browserstack session
-  config.reporters.push('blackbaud-browserstack');
-  config.plugins.push({
-    'reporter:blackbaud-browserstack': [
-      'type',
-      function (/* BrowserStack:sessionMapping */ sessions) {
-        this.onBrowserComplete = (browser) => browserUtils.logSession(sessions[browser.id]);
-      }
-    ]
-  });
-
   // These are general VSTS overrides, regardless of Browserstack
   const overrides = {
     browserDisconnectTimeout: 6e5,
@@ -83,8 +72,6 @@ function getConfig(config) {
   if (launchers) {
     overrides.customLaunchers = launchers;
     overrides.browsers = Object.keys(launchers);
-
-    // "browserStack" is case-sensitive.  That was a fun one to track down.
     overrides.browserStack = {
       port: 9876,
       pollingTimeout: 10000,
@@ -93,6 +80,18 @@ function getConfig(config) {
       accessKey: args.bsKey,
       enableLoggingForApi: true
     };
+
+    // Custom plugin used to read the Browserstack session
+    // Pushing to the original config since arrays aren't merged.
+    config.reporters.push('blackbaud-browserstack');
+    config.plugins.push({
+      'reporter:blackbaud-browserstack': [
+        'type',
+        function (/* BrowserStack:sessionMapping */ sessions) {
+          this.onBrowserComplete = (browser) => browserUtils.logSession(sessions[browser.id]);
+        }
+      ]
+    });
   }
 
   config.set(overrides);
