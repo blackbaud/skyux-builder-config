@@ -30,10 +30,10 @@ module.exports = {
       // Creates a unique key
       const browserMapped = Object.assign({}, browser, {
         key: [
-          browser.os || 'default',
-          browser.osVersion || 'default',
-          browser.browser || 'default',
-          browser.browserVersion || 'default'
+          browser.os || 'osDefault',
+          browser.osVersion || 'osVersionDefault',
+          browser.browser || 'browserDefault',
+          browser.browserVersion || 'browserVersionDefault'
         ].join('_')
       }, defaults);
 
