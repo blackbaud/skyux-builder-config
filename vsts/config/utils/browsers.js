@@ -4,14 +4,38 @@
 const logger = require('@blackbaud/skyux-logger');
 const get = require('lodash.get');
 
+// List of currently supported browser combinations to test against.
+// os, osVersion, and browser are required.
+const browsersCurrentlySupported = {
+  e2e: [
+    {
+      os: 'Windows',
+      osVersion: '10',
+      browser: 'Chrome'
+    }
+  ],
+  unit: [
+    {
+      os: 'Windows',
+      osVersion: '10',
+      browser: 'Chrome'
+    },
+    {
+      os: 'Windows',
+      osVersion: '10',
+      browser: 'Edge'
+    }
+  ]
+};
+
 // We normalize properties despite Browserstack/Protractor/Karma using different keys.
 const map = {
-  'e2e': {
+  e2e: {
     osVersion: 'os_version',
     browser: 'browserName',
     browserVersion: 'browser_version',
   },
-  'unit': {
+  unit: {
     osVersion: 'os_version',
     browserVersion: 'browser_version',
   }
@@ -20,9 +44,22 @@ const map = {
 module.exports = {
   getBrowsers: (config, testSuite, defaults) => {
 
-    const browsers = get(config, `skyPagesConfig.skyux.testSettings.${testSuite}.browsers`, []);
+    const testSuiteConfigKey = `skyPagesConfig.skyux.testSettings.${testSuite}`;
+    const configSupported = get(config, `${testSuiteConfigKey}.supported`, false);
+    const configBrowsers = get(config, `${testSuiteConfigKey}.browsers`, []);
+    let browsers = configBrowsers;
+
     const allowedPropertiesMap = map[testSuite];
     const allowedPropertiesKeys = Object.keys(allowedPropertiesMap);
+
+    if (configSupported) {
+      if (configBrowsers.length) {
+        logger.warn('You have specified to use custom and the default supported browsers.');
+      }
+
+      logger.info('Using default supported browsers.');
+      browsers = browsersCurrentlySupported[testSuite];
+    }
 
     return browsers.map(browser => {
 
