@@ -54,7 +54,7 @@ const browserSets = {
 };
 
 // We normalize properties despite Browserstack/Protractor/Karma using different keys.
-// Today, we don't expose the e2e config option, but I'm leaving this code in case we change our mind.
+// Leaving this functionaly in case we expose the e2e property in the future.
 const propertiesMap = {
   e2e: {
     osVersion: 'os_version',
@@ -83,7 +83,11 @@ function validateBrowserSet(configBrowserSet) {
 module.exports = {
   getBrowsers: (config, testSuite, defaults) => {
 
-    const configBrowserSetRequsted = get(config, `skyPagesConfig.skyux.testSettings.${testSuite}.browserSet`, '');
+    const configBrowserSetRequsted = get(
+      config,
+      `skyPagesConfig.skyux.testSettings.${testSuite}.browserSet`,
+      ''
+    );
     const configBrowserSetValidated = validateBrowserSet(configBrowserSetRequsted);
 
     const allowedPropertiesMap = propertiesMap[testSuite];
