@@ -4,25 +4,93 @@
 const logger = require('@blackbaud/skyux-logger');
 const get = require('lodash.get');
 
+const bsBrowserChrome = {
+  os: 'Windows',
+  osVersion: '10',
+  browser: 'Chrome'
+};
+
+const bsBrowserEdge = {
+  os: 'Windows',
+  osVersion: '10',
+  browser: 'Edge'
+};
+
+const bsBrowserIE = {
+  os: 'Windows',
+  osVersion: '7',
+  browser: 'IE',
+  browserVersion: '11'
+};
+
+const bsBrowserFirefox = {
+  os: 'OS X',
+  osVersion: 'High Sierra',
+  browser: 'Firefox'
+};
+
+const bsBrowserSafari = {
+  os: 'OS X',
+  osVersion: 'High Sierra',
+  browser: 'Safari'
+};
+
+const browserSets = {
+  speedy: [
+    bsBrowserChrome
+  ],
+  quirky: [
+    bsBrowserChrome,
+    bsBrowserEdge,
+    bsBrowserIE
+  ],
+  paranoid: [
+    bsBrowserChrome,
+    bsBrowserEdge,
+    bsBrowserIE,
+    bsBrowserFirefox,
+    bsBrowserSafari
+  ]
+};
+
 // We normalize properties despite Browserstack/Protractor/Karma using different keys.
-const map = {
-  'e2e': {
+// Today, we don't expose the e2e config option, but I'm leaving this code in case we change our mind.
+const propertiesMap = {
+  e2e: {
     osVersion: 'os_version',
     browser: 'browserName',
     browserVersion: 'browser_version',
   },
-  'unit': {
+  unit: {
     osVersion: 'os_version',
     browserVersion: 'browser_version',
   }
 };
 
+function validateBrowserSet(configBrowserSet) {
+  if (configBrowserSet) {
+    logger.info(`Attempting to use config setting ${configBrowserSet}.`);
+    const validBrowserSetKeys = Object.keys(browserSets);
+    const browserSetKeyIndex = validBrowserSetKeys.indexOf(configBrowserSet.toLowerCase());
+
+    if (browserSetKeyIndex > -1) {
+      logger.info(`Validated config setting ${configBrowserSet}.`);
+      return validBrowserSetKeys[browserSetKeyIndex];
+    }
+  }
+}
+
 module.exports = {
   getBrowsers: (config, testSuite, defaults) => {
 
-    const browsers = get(config, `skyPagesConfig.skyux.testSettings.${testSuite}.browsers`, []);
-    const allowedPropertiesMap = map[testSuite];
+    const configBrowserSetRequsted = get(config, `skyPagesConfig.skyux.testSettings.${testSuite}.browserSet`, '');
+    const configBrowserSetValidated = validateBrowserSet(configBrowserSetRequsted);
+
+    const allowedPropertiesMap = propertiesMap[testSuite];
     const allowedPropertiesKeys = Object.keys(allowedPropertiesMap);
+
+    // User hasn't defined a browserSet or provided an invalid set.
+    const browsers = configBrowserSetValidated ? browserSets[configBrowserSetValidated] : [];
 
     return browsers.map(browser => {
 
