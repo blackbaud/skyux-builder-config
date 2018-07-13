@@ -54,7 +54,7 @@ const browserSets = {
 };
 
 // We normalize properties despite Browserstack/Protractor/Karma using different keys.
-// Leaving this functionaly in case we expose the e2e property in the future.
+// Leaving this functionality in case we expose the e2e property in the future.
 const propertiesMap = {
   e2e: {
     osVersion: 'os_version',
@@ -89,11 +89,10 @@ module.exports = {
       ''
     );
     const configBrowserSetValidated = validateBrowserSet(configBrowserSetRequsted);
-
     const allowedPropertiesMap = propertiesMap[testSuite];
     const allowedPropertiesKeys = Object.keys(allowedPropertiesMap);
 
-    // User hasn't defined a browserSet or provided an invalid set.
+    // browserSet was either not provided, or was provided but was invalid.
     const browsers = configBrowserSetValidated ? browserSets[configBrowserSetValidated] : [];
 
     return browsers.map(browser => {
