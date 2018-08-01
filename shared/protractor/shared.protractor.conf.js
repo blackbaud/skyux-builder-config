@@ -82,9 +82,12 @@ function getConfig(env) {
       // Used to grab the Browserstack session
       onPrepare: () => new Promise((resolve, reject) => {
         require('ts-node').register({ ignore: false });
-        browser
-          .driver
-          .getSession()
+
+        // Attach config to the browser object to allow the
+        // `@skyux-sdk/e2e` library to access it for visual tests.
+        browser.skyE2E = require('./e2e-config')();
+
+        browser.driver.getSession()
           .then(session => {
             browserUtils.logSession(session.getId());
             resolve();
