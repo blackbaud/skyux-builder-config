@@ -9,6 +9,10 @@ const merge = require('@blackbaud/skyux-builder/utils/merge');
 const logger = require('@blackbaud/skyux-logger');
 const browserUtils = require('../utils/browsers');
 
+// Include the "fast selenium" side effect.
+// https://www.browserstack.com/automate/node#add-on
+require('../../../shared/utils/fast-selenium');
+
 // Needed since we bypass Protractor cli
 const args = minimist(process.argv.slice(2));
 
