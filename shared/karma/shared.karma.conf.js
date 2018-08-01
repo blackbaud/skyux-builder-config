@@ -28,6 +28,14 @@ function getLaunchers(config, env) {
 
 function getConfig(config, env) {
 
+  if (!env.BROWSER_STACK_USERNAME) {
+    throw Error('Please provide a BrowserStack username!');
+  }
+
+  if (!env.BROWSER_STACK_ACCESS_KEY) {
+    throw new Error('Please provide a BrowserStack access key!');
+  }
+
   // Apply defaults, needed first so we can read skyPagesConfig
   applySharedBuilderConfig(config);
 
