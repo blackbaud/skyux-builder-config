@@ -9,6 +9,7 @@ Configuration files for SKY UX Builder when running on different platforms.
 - `BROWSER_STACK_USERNAME`
 - `BROWSER_STACK_ACCESS_KEY`
 - `BROWSER_STACK_BUILD_ID`
+- `BROWSER_STACK_PROJECT`
 
 **VSTS (command-line arguments)**
 - `--buildNumber "BUILD_NUMBER_HERE"`
