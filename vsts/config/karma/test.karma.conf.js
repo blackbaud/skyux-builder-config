@@ -48,10 +48,10 @@ function getConfig(config) {
 
   // These are general VSTS overrides, regardless of Browserstack
   const overrides = {
-    browserDisconnectTimeout: 6e5,
+    browserDisconnectTimeout: 12e5,
     browserDisconnectTolerance: 3,
-    browserNoActivityTimeout: 6e5,
-    captureTimeout: 6e5,
+    browserNoActivityTimeout: 12e5,
+    captureTimeout: 12e5,
     junitReporter: {
       outputDir: path.join(process.cwd(), 'test-results')
     },
