@@ -1,7 +1,7 @@
 /* jshint node: true */
 'use strict';
 
-const applySharedBuilderConfig = require('@blackbaud/skyux-builder/config/karma/shared.karma.conf');
+const applySharedBuilderConfig = require('@blackbaud/skyux-builder/config/karma/test.karma.conf');
 const logger = require('@blackbaud/skyux-logger');
 const path = require('path');
 const browserUtils = require('../utils/browsers');
