@@ -110,6 +110,8 @@ function getConfig(env) {
 
   const config = merge(common.config, overrides);
   logger.verbose(config);
+
+  return config;
 }
 
 module.exports = getConfig;
