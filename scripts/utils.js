@@ -9,7 +9,7 @@ function dirHasChanges(dir) {
       // Untracked files are prefixed with '??'
       // https://git-scm.com/docs/git-status/1.8.1#_output
       // https://stackoverflow.com/a/6978402/6178885
-      return (result.output && result.output.indexOf('??') > -1);
+      return !!(result && result.indexOf('??') > -1);
     });
 }
 

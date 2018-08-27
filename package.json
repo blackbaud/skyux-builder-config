@@ -23,10 +23,13 @@
   "dependencies": {
     "@blackbaud/skyux-logger": "1.0.2",
     "browserstack-local": "1.3.0",
+    "cross-spawn": "6.0.5",
+    "fs-extra": "7.0.0",
     "karma-browserstack-launcher": "Blackbaud-BobbyEarl/karma-browserstack-launcher#enable-logging-for-api",
     "karma-junit-reporter": "1.2.0",
     "lodash.get": "4.4.2",
-    "minimist": "1.2.0"
+    "minimist": "1.2.0",
+    "rimraf": "2.6.2"
   },
   "devDependencies": {
     "jscs": "3.0.7",
