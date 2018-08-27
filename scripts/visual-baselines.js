@@ -43,7 +43,7 @@ function checkScreenshots() {
     .then((url) => {
       gitOriginUrl = url.replace(
         'https://',
-        `https://${process.env.SKY_VISUAL_BASELINES_ACCESS_TOKEN}@`
+        `https://${process.env.GITHUB_ACCESS_TOKEN}@`
       );
     })
 
@@ -53,11 +53,14 @@ function checkScreenshots() {
       if (hasChanges) {
         return handleBaselineScreenshots();
       }
+
+      logger.info('No new baseline images detected.');
     });
 }
 
 checkScreenshots()
   .then(() => {
+    logger.info('New baseline images saved.');
     rimraf.sync(tempDir);
     process.exit(0);
   })

@@ -1,6 +1,7 @@
 /* jshint node: true */
 'use strict';
 
+const logger = require('@blackbaud/skyux-logger');
 const fs = require('fs-extra');
 const rimraf = require('rimraf');
 const path = require('path');
@@ -12,7 +13,7 @@ const {
   getOriginUrl
 } = require('./utils');
 
-const githubAccessToken = process.env.SKY_VISUAL_FAILURES_ACCESS_TOKEN;
+const githubAccessToken = process.env.GITHUB_ACCESS_TOKEN;
 const webdriverDir = 'skyux-visualtest-results';
 const diffScreenshotsDir = 'screenshots-diff';
 
@@ -71,12 +72,12 @@ function checkScreenshots() {
 
 checkScreenshots()
   .then(() => {
-    console.log('No visual changes detected.');
+    logger.info('No visual changes detected.');
     rimraf.sync(webdriverDir);
     process.exit(0);
   })
   .catch((err) => {
-    console.error(err);
+    logger.error(err);
     rimraf.sync(webdriverDir);
     process.exit(1);
   });
