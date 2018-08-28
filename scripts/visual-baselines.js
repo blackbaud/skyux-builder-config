@@ -31,9 +31,13 @@ function handleBaselineScreenshots() {
       path.resolve(tempDir, baselineScreenshotsDir)
     ))
     .then(() => exec('git', ['checkout', '-b', branch], opts))
+    .then(() => exec('git', ['status'], opts))
     .then(() => exec('git', ['add', baselineScreenshotsDir], opts))
     .then(() => exec('git', ['commit', '-m', `Build #${buildId}: Added new baseline screenshots.`], opts))
-    .then(() => exec('git', ['push', '-fq', 'origin', branch], opts));
+    .then(() => exec('git', ['push', '-fq', 'origin', branch], opts))
+    .then(() => {
+      logger.info('New baseline images saved.');
+    });
 }
 
 function checkScreenshots() {
@@ -51,16 +55,16 @@ function checkScreenshots() {
     .then(() => dirHasChanges(baselineScreenshotsDir))
     .then((hasChanges) => {
       if (hasChanges) {
+        logger.info('New baseline images detected.');
         return handleBaselineScreenshots();
       }
 
-      logger.info('No new baseline images detected.');
+      logger.info('No new baseline images detected. Done.');
     });
 }
 
 checkScreenshots()
   .then(() => {
-    logger.info('New baseline images saved.');
     rimraf.sync(tempDir);
     process.exit(0);
   })

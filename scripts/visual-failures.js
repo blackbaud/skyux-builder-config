@@ -65,14 +65,16 @@ function checkScreenshots() {
     .then(() => dirHasChanges(path.resolve(diffScreenshotsDir, 'diff')))
     .then((hasChanges) => {
       if (hasChanges) {
+        logger.info('Visual changes detected...');
         return handleDiffScreenshots();
       }
+
+      logger.info('No visual changes detected. Done.');
     });
 }
 
 checkScreenshots()
   .then(() => {
-    logger.info('No visual changes detected.');
     rimraf.sync(webdriverDir);
     process.exit(0);
   })
