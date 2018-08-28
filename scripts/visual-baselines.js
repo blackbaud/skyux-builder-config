@@ -30,7 +30,7 @@ function handleBaselineScreenshots() {
       baselineScreenshotsDir,
       path.resolve(tempDir, baselineScreenshotsDir)
     ))
-    .then(() => exec('git', ['checkout', '-b', branch], opts))
+    .then(() => exec('git', ['checkout', branch], opts))
     .then(() => exec('git', ['status'], opts))
     .then(() => exec('git', ['add', baselineScreenshotsDir], opts))
     .then(() => exec('git', ['commit', '-m', `Build #${buildId}: Added new baseline screenshots.`], opts))
