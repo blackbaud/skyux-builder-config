@@ -18,5 +18,6 @@ Configuration files for SKY UX Builder when running on different platforms.
 - `--bsKey ********`
 
 **Visual Tests**
-- `SKY_VISUAL_FAILURES_ACCESS_TOKEN` An access token created by [blackbaud/skyux-visualtest-results](https://github.com/blackbaud/skyux-visualtest-results) repo owners. This token is provided to each SPA on-request.
-- `SKY_VISUAL_BASELINES_ACCESS_TOKEN` An access token created by the SPA repo owners.
+
+- `VISUAL_FAILURES_REPO_URL` A secure repo URL created by the SPA repo owners in this format: `https://{access_token}@github.com/{org_name}/{repo_name}.git`
+- `VISUAL_BASELINES_REPO_URL` A secure repo URL created by the SPA repo owners in this format: `https://{access_token}@github.com/{org_name}/{repo_name}.git`

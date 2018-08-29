@@ -15,17 +15,16 @@ const {
 const baselineScreenshotsDir = 'screenshots-baseline';
 const tempDir = '.skypagesvisualbaselinetemp';
 
-let gitOriginUrl;
-
 function handleBaselineScreenshots() {
   const buildId = new Date().getTime();
   const branch = 'master';
   const opts = { cwd: tempDir };
+  const gitUrl = process.env.VISUAL_BASELINES_REPO_URL;
 
   return Promise.resolve()
     .then(() => exec('git', ['config', '--global', 'user.email', '"sky-build-user@blackbaud.com"']))
     .then(() => exec('git', ['config', '--global', 'user.name', '"Blackbaud Sky Build User"']))
-    .then(() => exec('git', ['clone', gitOriginUrl, '--single-branch', tempDir]))
+    .then(() => exec('git', ['clone', gitUrl, '--single-branch', tempDir]))
     .then(() => fs.copy(
       baselineScreenshotsDir,
       path.resolve(tempDir, baselineScreenshotsDir)
@@ -41,17 +40,16 @@ function handleBaselineScreenshots() {
 }
 
 function checkScreenshots() {
-  return Promise.resolve()
-    // Get origin URL.
-    .then(() => getOriginUrl())
-    .then((url) => {
-      gitOriginUrl = url.replace(
-        'https://',
-        `https://${process.env.GITHUB_ACCESS_TOKEN}@`
-      );
-    })
 
-    // Check baseline screenshots.
+  // Don't commit new visual baseline images during a pull request.
+  if (process.env.TRAVIS_PULL_REQUEST !== false) {
+    logger.info('New visual baseline images are not saved during a pull request. Aborting script.');
+    return Promise.resolve();
+  }
+
+  logger.info('Checking new visual baseline images...');
+
+  return Promise.resolve()
     .then(() => dirHasChanges(baselineScreenshotsDir))
     .then((hasChanges) => {
       if (hasChanges) {

@@ -9,15 +9,12 @@ const path = require('path');
 const {
   dirHasChanges,
   exec,
-  getFeatureBranch,
-  getOriginUrl
+  getFeatureBranch
 } = require('./utils');
 
-const githubAccessToken = process.env.GITHUB_ACCESS_TOKEN;
 const webdriverDir = 'skyux-visualtest-results';
 const diffScreenshotsDir = 'screenshots-diff';
 
-let gitOriginUrl;
 let gitFeatureBranch;
 
 /**
@@ -26,35 +23,33 @@ let gitFeatureBranch;
 function handleDiffScreenshots() {
   const buildId = new Date().getTime();
   const opts = { cwd: webdriverDir };
-  const name = gitOriginUrl.split('/')[1].replace('.git', '');
+  const gitUrl = process.env.VISUAL_FAILURES_REPO_URL;
+  const name = gitUrl.split('@')[1].split('/')[1].replace('.git', '');
   const diffBranch = `${name}_${gitFeatureBranch}_${buildId}-webdriver`;
+
+  console.log('DIFF BRANCH: ', diffBranch);
 
   return Promise.resolve()
     .then(() => exec('git', ['config', '--global', 'user.email', '"sky-build-user@blackbaud.com"']))
     .then(() => exec('git', ['config', '--global', 'user.name', '"Blackbaud Sky Build User"']))
-    .then(() => exec('git', ['clone', `https://${githubAccessToken}@github.com/blackbaud/skyux-visualtest-results.git`, '--single-branch', webdriverDir]))
+    .then(() => exec('git', ['clone', gitUrl, '--single-branch', webdriverDir]))
     .then(() => fs.copy(diffScreenshotsDir, path.resolve(webdriverDir, diffScreenshotsDir)))
     .then(() => exec('git', ['checkout', '-b', diffBranch], opts))
     .then(() => exec('git', ['add', diffScreenshotsDir], opts))
     .then(() => exec('git', ['commit', '-m', `Build #${buildId}: Screenshot results pushed to skyux-visualtest-results.`], opts))
     .then(() => exec('git', ['push', '-fq', 'origin', diffBranch], opts))
     .then(() => {
+      const url = gitUrl.split('@')[1].replace('.git', '');
       return Promise.reject(new Error([
         `SKY UX visual test failure!`,
         `Screenshots may be viewed at:`,
-        `https://github.com/blackbaud/skyux-visualtest-results/tree/${diffBranch}`
+        `https://${url}/tree/${diffBranch}`
       ].join('\n')));
     });
 }
 
 function checkScreenshots() {
   return Promise.resolve()
-    // Get origin URL.
-    .then(() => getOriginUrl())
-    .then((url) => {
-      gitOriginUrl = url;
-    })
-
     // Get name of feature branch.
     .then(() => getFeatureBranch())
     .then((branch) => {
@@ -79,7 +74,7 @@ checkScreenshots()
     process.exit(0);
   })
   .catch((err) => {
-    logger.error(err);
+    logger.error(err.message);
     rimraf.sync(webdriverDir);
     process.exit(1);
   });

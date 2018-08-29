@@ -48,15 +48,8 @@ function getFeatureBranch() {
     .then((output) => output.replace(/\n/g, ''));
 }
 
-// Get git origin URL.
-function getOriginUrl() {
-  return exec('git', ['config', '--get', 'remote.origin.url'])
-    .then((output) => output.replace(/\n/g, ''));
-}
-
 module.exports = {
   dirHasChanges,
   exec,
-  getFeatureBranch,
-  getOriginUrl
+  getFeatureBranch
 };
