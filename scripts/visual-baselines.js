@@ -32,7 +32,7 @@ function handleBaselineScreenshots() {
     .then(() => exec('git', ['checkout', branch], opts))
     .then(() => exec('git', ['status'], opts))
     .then(() => exec('git', ['add', baselineScreenshotsDir], opts))
-    .then(() => exec('git', ['commit', '-m', `Build #${buildId}: Added new baseline screenshots.`], opts))
+    .then(() => exec('git', ['commit', '-m', `Build #${buildId}: Added new baseline screenshots. [ci skip]`], opts))
     .then(() => exec('git', ['push', '-fq', 'origin', branch], opts))
     .then(() => {
       logger.info('New baseline images saved.');
