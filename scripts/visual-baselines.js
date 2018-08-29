@@ -39,7 +39,7 @@ function handleBaselineScreenshots() {
 }
 
 function checkScreenshots() {
-
+  console.log('TRAVIS_PULL_REQUEST?', process.env.TRAVIS_PULL_REQUEST);
   // Don't commit new visual baseline images during a pull request.
   if (process.env.TRAVIS_PULL_REQUEST !== false) {
     logger.info('New visual baseline images are not saved during a pull request. Aborting script.');
