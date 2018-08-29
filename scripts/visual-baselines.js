@@ -8,8 +8,7 @@ const logger = require('@blackbaud/skyux-logger');
 
 const {
   exec,
-  dirHasChanges,
-  getOriginUrl
+  dirHasChanges
 } = require('./utils');
 
 const baselineScreenshotsDir = 'screenshots-baseline';
