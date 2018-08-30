@@ -41,15 +41,7 @@ function exec(cmd, args, opts) {
   });
 }
 
-// Get name of feature branch.
-// https://stackoverflow.com/a/12142066/6178885
-function getFeatureBranch() {
-  return exec('git', ['rev-parse', '--abbrev-ref', 'HEAD'])
-    .then((output) => output.replace(/\n/g, ''));
-}
-
 module.exports = {
   dirHasChanges,
-  exec,
-  getFeatureBranch
+  exec
 };

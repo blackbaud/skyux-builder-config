@@ -8,14 +8,11 @@ const path = require('path');
 
 const {
   dirHasChanges,
-  exec,
-  getFeatureBranch
+  exec
 } = require('./utils');
 
 const webdriverDir = 'skyux-visualtest-results';
 const diffScreenshotsDir = 'screenshots-diff';
-
-let gitFeatureBranch;
 
 /**
  * Commit diff screenshots to a remote repo.
@@ -24,10 +21,7 @@ function handleDiffScreenshots() {
   const buildId = new Date().getTime();
   const opts = { cwd: webdriverDir };
   const gitUrl = process.env.VISUAL_FAILURES_REPO_URL;
-  const name = gitUrl.split('@')[1].split('/')[1].replace('.git', '');
-  const diffBranch = `${name}_${gitFeatureBranch}_${buildId}-webdriver`;
-
-  console.log('DIFF BRANCH: ', diffBranch);
+  const diffBranch = `${buildId}`;
 
   return Promise.resolve()
     .then(() => exec('git', ['config', '--global', 'user.email', '"sky-build-user@blackbaud.com"']))
@@ -50,13 +44,6 @@ function handleDiffScreenshots() {
 
 function checkScreenshots() {
   return Promise.resolve()
-    // Get name of feature branch.
-    .then(() => getFeatureBranch())
-    .then((branch) => {
-      gitFeatureBranch = branch;
-    })
-
-    // Check diff screenshots.
     .then(() => dirHasChanges(path.resolve(diffScreenshotsDir, 'diff')))
     .then((hasChanges) => {
       if (hasChanges) {
