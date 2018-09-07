@@ -2,6 +2,7 @@
 'use strict';
 
 const fs = require('fs-extra');
+const minimist = require('minimist');
 const path = require('path');
 const rimraf = require('rimraf');
 const logger = require('@blackbaud/skyux-logger');
@@ -11,14 +12,27 @@ const {
   dirHasChanges
 } = require('./utils');
 
+const args = minimist(process.argv.slice(2));
 const baselineScreenshotsDir = 'screenshots-baseline';
 const tempDir = '.skypagesvisualbaselinetemp';
 
 function handleBaselineScreenshots() {
-  const buildId = new Date().getTime();
   const branch = 'master';
   const opts = { cwd: tempDir };
   const gitUrl = process.env.VISUAL_BASELINES_REPO_URL;
+
+  let buildId;
+  switch (args.platform) {
+    case 'travis':
+    buildId = process.env.TRAVIS_BUILD_NUMBER;
+    break;
+    case 'vsts':
+    buildId = process.env.BUILD_BUILDID;
+    break;
+    default:
+    buildId = new Date().getTime();
+    break;
+  }
 
   return Promise.resolve()
     .then(() => exec('git', ['config', '--global', 'user.email', '"sky-build-user@blackbaud.com"']))
