@@ -51,7 +51,26 @@ function exec(cmd, args, opts) {
   });
 }
 
+function getBuildId() {
+  let buildId;
+
+  switch (args.platform) {
+    case 'travis':
+    buildId = process.env.TRAVIS_BUILD_NUMBER;
+    break;
+    case 'vsts':
+    buildId = process.env.BUILD_BUILDID;
+    break;
+    default:
+    buildId = new Date().getTime();
+    break;
+  }
+
+  return buildId;
+}
+
 module.exports = {
   dirHasChanges,
-  exec
+  exec,
+  getBuildId
 };

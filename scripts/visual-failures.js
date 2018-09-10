@@ -18,7 +18,7 @@ const diffScreenshotsDir = 'screenshots-diff';
  * Commit diff screenshots to a remote repo.
  */
 function handleDiffScreenshots() {
-  const buildId = new Date().getTime();
+  const buildId = getBuildId();
   const opts = { cwd: webdriverDir };
   const gitUrl = process.env.VISUAL_FAILURES_REPO_URL;
   const diffBranch = `${buildId}`;
