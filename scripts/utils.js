@@ -5,18 +5,20 @@ const spawn = require('cross-spawn');
 
 function dirHasChanges(dir) {
   return exec('git', ['status', dir, '--porcelain'])
-    .then((result) => {
-      if (!result) {
+    .then((output) => {
+      if (!output) {
         return false;
       }
+
+      const result = output.trim();
 
       // Untracked files are prefixed with '??'
       // Modified files are prefixed with 'M'
       // https://git-scm.com/docs/git-status/1.8.1#_output
       // https://stackoverflow.com/a/6978402/6178885
       return (
-        result.trim().indexOf('??') === 0 ||
-        result.trim().indexOf('M') === 0
+        result.indexOf('??') === 0 ||
+        result.indexOf('M') === 0
       );
     });
 }
