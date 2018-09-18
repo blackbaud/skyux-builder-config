@@ -35,10 +35,6 @@ function getCapabilities(config, env) {
 }
 
 function getConfig(env) {
-
-  // This is what ties the tests to the local tunnel that's created
-  const id = 'skyux-spa-' + (new Date()).getTime();
-
   let overrides = {};
   const capabilities = getCapabilities(common.config, env);
 
