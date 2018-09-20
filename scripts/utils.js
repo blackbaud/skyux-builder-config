@@ -2,6 +2,7 @@
 'use strict';
 
 const spawn = require('cross-spawn');
+const minimist = require('minimist');
 
 function dirHasChanges(dir) {
   return exec('git', ['status', dir, '--porcelain'])
@@ -52,6 +53,8 @@ function exec(cmd, args, opts) {
 }
 
 function getBuildId() {
+  const args = minimist(process.argv.slice(2));
+
   let buildId;
 
   switch (args.platform) {
