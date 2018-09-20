@@ -8,7 +8,8 @@ const path = require('path');
 
 const {
   dirHasChanges,
-  exec
+  exec,
+  getBuildId
 } = require('./utils');
 
 const webdriverDir = 'skyux-visualtest-results';
@@ -30,7 +31,9 @@ function handleDiffScreenshots() {
     .then(() => fs.copy(diffScreenshotsDir, path.resolve(webdriverDir, diffScreenshotsDir)))
     .then(() => exec('git', ['checkout', '-b', diffBranch], opts))
     .then(() => exec('git', ['add', diffScreenshotsDir], opts))
-    .then(() => exec('git', ['commit', '-m', `Build #${buildId}: Screenshot results pushed to skyux-visualtest-results.`], opts))
+    .then(() => exec('git', [
+      'commit', '-m', `Build #${buildId}: Screenshot results pushed to skyux-visualtest-results.`
+    ], opts))
     .then(() => exec('git', ['push', '-fq', 'origin', diffBranch], opts))
     .then(() => {
       const url = gitUrl.split('@')[1].replace('.git', '');

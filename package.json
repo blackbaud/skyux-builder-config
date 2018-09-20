@@ -4,8 +4,8 @@
   "description": "Configuration files for SKY UX Builder when running on different platforms.",
   "main": "index.js",
   "scripts": {
-    "jscs": "jscs vsts",
-    "jshint": "jshint vsts",
+    "jscs": "jscs scripts shared travis vsts",
+    "jshint": "jshint scripts shared travis vsts",
     "lint": "npm run jscs && npm run jshint",
     "test": "npm run lint"
   },
