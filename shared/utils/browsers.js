@@ -7,7 +7,8 @@ const get = require('lodash.get');
 const bsBrowserChrome = {
   os: 'Windows',
   osVersion: '10',
-  browser: 'Chrome'
+  browser: 'Chrome',
+  browserVersion: '70'
 };
 
 const bsBrowserEdge = {
