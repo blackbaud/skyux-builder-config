@@ -22,6 +22,7 @@
   "homepage": "https://github.com/blackbaud/skyux-builder-config#readme",
   "dependencies": {
     "@blackbaud/skyux-logger": "1.0.2",
+    "@skyux-sdk/builder-config": "blackbaud/skyux-sdk-builder-config",
     "browserstack-local": "1.3.0",
     "cross-spawn": "6.0.5",
     "fs-extra": "7.0.0",
