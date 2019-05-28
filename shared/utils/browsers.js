@@ -25,13 +25,13 @@ const bsBrowserIE = {
 
 const bsBrowserFirefox = {
   os: 'OS X',
-  osVersion: 'High Sierra',
+  osVersion: 'Mojave',
   browser: 'Firefox'
 };
 
 const bsBrowserSafari = {
   os: 'OS X',
-  osVersion: 'High Sierra',
+  osVersion: 'Mojave',
   browser: 'Safari'
 };
 
@@ -128,7 +128,7 @@ module.exports = {
 
 ****************************************************************************************************
 Visit the following URL to view your Browserstack results:
-https://host.nxt.blackbaud.com/browserstack/sessions/${session}
+https://app.blackbaud.com/browserstack/sessions/${session}
 ****************************************************************************************************
 
 `
