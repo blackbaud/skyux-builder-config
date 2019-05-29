@@ -26,7 +26,8 @@ const bsBrowserIE = {
 const bsBrowserFirefox = {
   os: 'OS X',
   osVersion: 'Mojave',
-  browser: 'Firefox'
+  browser: 'Firefox',
+  browserVersion: '68.0 beta'
 };
 
 const bsBrowserSafari = {
