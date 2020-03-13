@@ -28,7 +28,7 @@
     "karma-browserstack-launcher": "Blackbaud-BobbyEarl/karma-browserstack-launcher#enable-logging-for-api",
     "karma-junit-reporter": "1.2.0",
     "lodash.get": "4.4.2",
-    "minimist": "1.2.0",
+    "minimist": "1.2.5",
     "rimraf": "2.6.2"
   },
   "devDependencies": {
